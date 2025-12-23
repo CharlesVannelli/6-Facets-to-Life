@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Facets Balance (Max 41 Points)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 { text-align: center; }
+    p { text-align: center; }
+    .facet {
+      margin: 20px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+    }
+    .label-value {
+      flex: 1;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .value {
+      font-size: 1.8em;
+      font-weight: bold;
+      text-align: center;
+      width: 60px;
+    }
+    input[type="range"] {
+      flex: 1;
+      margin: 0 15px;
+      height: 8px;
+      border-radius: 5px;
+      background: #ddd;
+      outline: none;
+    }
+    #summary {
+      text-align: center;
+      font-size: 1.8em;
+      margin: 30px 0;
+      padding: 15px;
+      border-radius: 8px;
+      background: #e0ffe0;
+    }
+    #summary.exceeded {
+      background: #ffe0e0;
+      color: #d00;
+    }
+    #remaining {
+      font-weight: bold;
+      color: #006400;
+    }
+    #remaining.negative {
+      color: #d00;
+    }
+  </style>
+</head>
+<body>
+  <h1>Life Facets Balance</h1>
+  <p>Rate each facet 1–10. Maximum total = 41 points.<br>Perfect harmony (42) is impossible — happiness is a pursuit.</p>
+
+  <div class="facet">
+    <div class="label-value">
+      <label>1. Family/Friends</label>
+    </div>
+    <input type="range" id="family" min="1" max="10" value="1">
+    <div class="value" id="family-value">1</div>
+  </div>
+
+  <div class="facet">
+    <div class="label-value">
+      <label>2. Health (mental & physical)</label>
+    </div>
+    <input type="range" id="health" min="1" max="10" value="1">
+    <div class="value" id="health-value">1</div>
+  </div>
+
+  <div class="facet">
+    <div class="label-value">
+      <label>3. Finances</label>
+    </div>
+    <input type="range" id="finances" min="1" max="10" value="1">
+    <div class="value" id="finances-value">1</div>
+  </div>
+
+  <div class="facet">
+    <div class="label-value">
+      <label>4. Personal Time/Projects</label>
+    </div>
+    <input type="range" id="personal" min="1" max="10" value="1">
+    <div class="value" id="personal-value">1</div>
+  </div>
+
+  <div class="facet">
+    <div class="label-value">
+      <label>5. Girlfriend/Boyfriend/Spouse/Kids</label>
+    </div>
+    <input type="range" id="relationship" min="1" max="10" value="1">
+    <div class="value" id="relationship-value">1</div>
+  </div>
+
+  <div class="facet">
+    <div class="label-value">
+      <label>6. Career</label>
+    </div>
+    <input type="range" id="career" min="1" max="10" value="1">
+    <div class="value" id="career-value">1</div>
+  </div>
+
+  <div id="summary">
+    Total used: <span id="total-value">6</span>/41 &nbsp;&nbsp;|&nbsp;&nbsp;
+    <span id="remaining">Points remaining: 35</span>
+  </div>
+
+  <script>
+    const facets = ['family', 'health', 'finances', 'personal', 'relationship', 'career'];
+    const totalEl = document.getElementById('total-value');
+    const remainingEl = document.getElementById('remaining');
+    const summaryEl = document.getElementById('summary');
+
+    function update() {
+      let total = 0;
+      facets.forEach(id => {
+        const slider = document.getElementById(id);
+        const valueEl = document.getElementById(id + '-value');
+        valueEl.textContent = slider.value;
+        total += parseInt(slider.value);
+      });
+      totalEl.textContent = total;
+      const remaining = 41 - total;
+      remainingEl.textContent = `Points remaining: ${remaining}`;
+      
+      if (remaining < 0) {
+        summaryEl.classList.add('exceeded');
+        remainingEl.classList.add('negative');
+      } else {
+        summaryEl.classList.remove('exceeded');
+        remainingEl.classList.remove('negative');
+      }
+    }
+
+    facets.forEach(id => {
+      document.getElementById(id).addEventListener('input', update);
+    });
+
+    update();
+  </script>
+</body>
+</html>
