@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>6 Facets to Happiness - by Charles Vannelli (Max 41 Points)</title>
+  <title>6 Facets to Happiness - Charles Vannelli (Max 41 Points)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,126 +14,148 @@
       color: #333;
     }
     h1 { text-align: center; }
+    p { text-align: center; }
     .facet {
       margin: 20px 0;
       padding: 15px;
       background: white;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+    }
+    .label-value {
+      flex: 1;
     }
     label {
-      display: block;
       font-weight: bold;
+      display: block;
       margin-bottom: 8px;
     }
+    .value {
+      font-size: 1.8em;
+      font-weight: bold;
+      text-align: center;
+      width: 60px;
+    }
     input[type="range"] {
-      width: 100%;
+      flex: 1;
+      margin: 0 15px;
       height: 8px;
       border-radius: 5px;
       background: #ddd;
       outline: none;
     }
-    .value {
-      font-size: 1.5em;
+    #summary {
       text-align: center;
-      margin: 10px 0;
-      font-weight: bold;
-    }
-    #total {
-      font-size: 2em;
-      text-align: center;
+      font-size: 1.8em;
       margin: 30px 0;
       padding: 15px;
       border-radius: 8px;
       background: #e0ffe0;
     }
-    #total.exceeded {
+    #summary.exceeded {
       background: #ffe0e0;
       color: #d00;
     }
-    #warning {
-      text-align: center;
-      color: #d00;
+    #remaining {
       font-weight: bold;
-      display: none;
+      color: #006400;
     }
-    #warning.show { display: block; }
+    #remaining.negative {
+      color: #d00;
+    }
   </style>
 </head>
 <body>
   <h1>Life Facets Balance</h1>
-  <p style="text-align:center;">Rate each facet 1–10. Total cannot exceed 41 — perfect harmony (42) is impossible.</p>
+  <p>Rate each facet 1–10. Maximum total = 41 points.<br>Perfect harmony (42) is impossible — happiness is a pursuit.</p>
 
   <div class="facet">
-    <label>1. Family/Friends</label>
-    <input type="range" id="family" min="1" max="10" value="7">
-    <div class="value" id="family-value">7</div>
+    <div class="label-value">
+      <label>1. Family/Friends</label>
+    </div>
+    <input type="range" id="family" min="1" max="10" value="1">
+    <div class="value" id="family-value">1</div>
   </div>
 
   <div class="facet">
-    <label>2. Health (mental & physical)</label>
-    <input type="range" id="health" min="1" max="10" value="7">
-    <div class="value" id="health-value">7</div>
+    <div class="label-value">
+      <label>2. Health (mental & physical)</label>
+    </div>
+    <input type="range" id="health" min="1" max="10" value="1">
+    <div class="value" id="health-value">1</div>
   </div>
 
   <div class="facet">
-    <label>3. Finances</label>
-    <input type="range" id="finances" min="1" max="10" value="7">
-    <div class="value" id="finances-value">7</div>
+    <div class="label-value">
+      <label>3. Finances</label>
+    </div>
+    <input type="range" id="finances" min="1" max="10" value="1">
+    <div class="value" id="finances-value">1</div>
   </div>
 
   <div class="facet">
-    <label>4. Personal Time/Projects</label>
-    <input type="range" id="personal" min="1" max="10" value="7">
-    <div class="value" id="personal-value">7</div>
+    <div class="label-value">
+      <label>4. Personal Time/Projects</label>
+    </div>
+    <input type="range" id="personal" min="1" max="10" value="1">
+    <div class="value" id="personal-value">1</div>
   </div>
 
   <div class="facet">
-    <label>5. Girlfriend/Boyfriend/Spouse/Kids</label>
-    <input type="range" id="relationship" min="1" max="10" value="7">
-    <div class="value" id="relationship-value">7</div>
+    <div class="label-value">
+      <label>5. Girlfriend/Boyfriend/Spouse/Kids</label>
+    </div>
+    <input type="range" id="relationship" min="1" max="10" value="1">
+    <div class="value" id="relationship-value">1</div>
   </div>
 
   <div class="facet">
-    <label>6. Career</label>
-    <input type="range" id="career" min="1" max="10" value="7">
-    <div class="value" id="career-value">7</div>
+    <div class="label-value">
+      <label>6. Career</label>
+    </div>
+    <input type="range" id="career" min="1" max="10" value="1">
+    <div class="value" id="career-value">1</div>
   </div>
 
-  <div id="total">Total: <span id="total-value">42</span>/41</div>
-  <div id="warning">Total exceeds 41 — adjust to stay within the pursuit limit!</div>
+  <div id="summary">
+    Total used: <span id="total-value">6</span>/41 &nbsp;&nbsp;|&nbsp;&nbsp;
+    <span id="remaining">Points remaining: 35</span>
+  </div>
 
   <script>
     const facets = ['family', 'health', 'finances', 'personal', 'relationship', 'career'];
-    const totalValueEl = document.getElementById('total-value');
-    const totalEl = document.getElementById('total');
-    const warningEl = document.getElementById('warning');
+    const totalEl = document.getElementById('total-value');
+    const remainingEl = document.getElementById('remaining');
+    const summaryEl = document.getElementById('summary');
 
-    function updateTotal() {
-      let sum = 0;
+    function update() {
+      let total = 0;
       facets.forEach(id => {
         const slider = document.getElementById(id);
         const valueEl = document.getElementById(id + '-value');
         valueEl.textContent = slider.value;
-        sum += parseInt(slider.value);
+        total += parseInt(slider.value);
       });
-      totalValueEl.textContent = sum;
-      if (sum > 41) {
-        totalEl.classList.add('exceeded');
-        warningEl.classList.add('show');
+      totalEl.textContent = total;
+      const remaining = 41 - total;
+      remainingEl.textContent = `Points remaining: ${remaining}`;
+      
+      if (remaining < 0) {
+        summaryEl.classList.add('exceeded');
+        remainingEl.classList.add('negative');
       } else {
-        totalEl.classList.remove('exceeded');
-        warningEl.classList.remove('show');
+        summaryEl.classList.remove('exceeded');
+        remainingEl.classList.remove('negative');
       }
     }
 
-    // Attach listeners
     facets.forEach(id => {
-      document.getElementById(id).addEventListener('input', updateTotal);
+      document.getElementById(id).addEventListener('input', update);
     });
 
-    // Initial calculation
-    updateTotal();
+    update();
   </script>
 </body>
 </html>
