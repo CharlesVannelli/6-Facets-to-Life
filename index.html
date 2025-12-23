@@ -13,8 +13,22 @@
       background: #f9f9f9;
       color: #333;
     }
-    h1 { text-align: center; }
-    p { text-align: center; }
+    h1 { 
+      text-align: center; 
+      margin-bottom: 5px; 
+    }
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 30px;
+      font-weight: normal;
+      font-size: 1.4em;
+      color: #555;
+    }
+    p { 
+      text-align: center; 
+      margin-bottom: 40px;
+    }
     .facet {
       margin: 20px 0;
       padding: 15px;
@@ -68,7 +82,8 @@
   </style>
 </head>
 <body>
-  <h1>Life Facets Balance</h1>
+  <h1>6 Facets to Happiness</h1>
+  <h2>by Charles Vannelli</h2>
   <p>Rate each facet 1–10. Maximum total = 41 points.<br>Perfect harmony (42) is impossible — happiness is a pursuit.</p>
 
   <div class="facet">
@@ -141,7 +156,7 @@
       totalEl.textContent = total;
       const remaining = 41 - total;
       remainingEl.textContent = `Points remaining: ${remaining}`;
-      
+     
       if (remaining < 0) {
         summaryEl.classList.add('exceeded');
         remainingEl.classList.add('negative');
