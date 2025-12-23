@@ -3,54 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Life Facets Balance (Max 41 Points)</title>
+  <title>6 Facets of Happiness</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 600px;
+      max-width: 700px;
       margin: 40px auto;
       padding: 20px;
       background: #f9f9f9;
       color: #333;
     }
-    h1 { text-align: center; }
-    p { text-align: center; }
+    h1 { text-align: center; margin-bottom: 5px; }
+    h2 { text-align: center; margin-top: 0; font-weight: normal; font-size: 1.3em; color: #555; }
+    p { text-align: center; margin-bottom: 40px; }
+
     .facet {
-      margin: 20px 0;
-      padding: 15px;
+      margin: 30px 0;
+      padding: 20px;
       background: white;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       display: flex;
       align-items: center;
+      justify-content: space-between;
     }
-    .label-value {
+    .label {
       flex: 1;
-    }
-    label {
       font-weight: bold;
-      display: block;
-      margin-bottom: 8px;
+      font-size: 1.1em;
     }
-    .value {
-      font-size: 1.8em;
-      font-weight: bold;
-      text-align: center;
+    .slider-container {
+      position: relative;
+      height: 300px;
       width: 60px;
+      display: flex;
+      align-items: center;
     }
     input[type="range"] {
-      flex: 1;
-      margin: 0 15px;
-      height: 8px;
-      border-radius: 5px;
-      background: #ddd;
-      outline: none;
+      writing-mode: bt-lr; /* IE */
+      -webkit-appearance: slider-vertical; /* Chrome/Safari */
+      width: 300px;
+      height: 60px;
+      padding: 0 20px;
+      background: transparent;
     }
+    .seven-mark {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: #999;
+      border-dash: dashed;
+      top: calc(30% + 2px); /* Positions at 7 on a 1-10 scale */
+      pointer-events: none;
+      border-top: 2px dashed #999;
+    }
+    .value {
+      width: 60px;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+    }
+
     #summary {
       text-align: center;
       font-size: 1.8em;
-      margin: 30px 0;
-      padding: 15px;
+      margin: 40px 0;
+      padding: 20px;
       border-radius: 8px;
       background: #e0ffe0;
     }
@@ -68,54 +86,61 @@
   </style>
 </head>
 <body>
-  <h1>Life Facets Balance</h1>
-  <p>Rate each facet 1–10. Maximum total = 41 points.<br>Perfect harmony (42) is impossible — happiness is a pursuit.</p>
+  <h1>6 Facets of Happiness</h1>
+  <h2>by Charles Vannelli</h2>
+  <p>Rate each facet 1–10 (7 = personal sweet spot).<br>Maximum total = 41 points — perfect harmony (42) is impossible.<br>Happiness is always a pursuit.</p>
 
   <div class="facet">
-    <div class="label-value">
-      <label>1. Family/Friends</label>
+    <div class="label">1. Family/Friends</div>
+    <div class="slider-container">
+      <div class="seven-mark"></div>
+      <input type="range" id="family" min="1" max="10" value="1" orient="vertical">
     </div>
-    <input type="range" id="family" min="1" max="10" value="1">
     <div class="value" id="family-value">1</div>
   </div>
 
   <div class="facet">
-    <div class="label-value">
-      <label>2. Health (mental & physical)</label>
+    <div class="label">2. Health (mental & physical)</div>
+    <div class="slider-container">
+      <div class="seven-mark"></div>
+      <input type="range" id="health" min="1" max="10" value="1" orient="vertical">
     </div>
-    <input type="range" id="health" min="1" max="10" value="1">
     <div class="value" id="health-value">1</div>
   </div>
 
   <div class="facet">
-    <div class="label-value">
-      <label>3. Finances</label>
+    <div class="label">3. Finances</div>
+    <div class="slider-container">
+      <div class="seven-mark"></div>
+      <input type="range" id="finances" min="1" max="10" value="1" orient="vertical">
     </div>
-    <input type="range" id="finances" min="1" max="10" value="1">
     <div class="value" id="finances-value">1</div>
   </div>
 
   <div class="facet">
-    <div class="label-value">
-      <label>4. Personal Time/Projects</label>
+    <div class="label">4. Personal Time/Projects</div>
+    <div class="slider-container">
+      <div class="seven-mark"></div>
+      <input type="range" id="personal" min="1" max="10" value="1" orient="vertical">
     </div>
-    <input type="range" id="personal" min="1" max="10" value="1">
     <div class="value" id="personal-value">1</div>
   </div>
 
   <div class="facet">
-    <div class="label-value">
-      <label>5. Girlfriend/Boyfriend/Spouse/Kids</label>
+    <div class="label">5. Girlfriend/Boyfriend/Spouse/Kids</div>
+    <div class="slider-container">
+      <div class="seven-mark"></div>
+      <input type="range" id="relationship" min="1" max="10" value="1" orient="vertical">
     </div>
-    <input type="range" id="relationship" min="1" max="10" value="1">
     <div class="value" id="relationship-value">1</div>
   </div>
 
   <div class="facet">
-    <div class="label-value">
-      <label>6. Career</label>
+    <div class="label">6. Career</div>
+    <div class="slider-container">
+      <div class="seven-mark"></div>
+      <input type="range" id="career" min="1" max="10" value="1" orient="vertical">
     </div>
-    <input type="range" id="career" min="1" max="10" value="1">
     <div class="value" id="career-value">1</div>
   </div>
 
